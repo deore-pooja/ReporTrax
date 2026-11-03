@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}Report · Report Builder{% endblock %}
+{% block bodyclass %}report-page{% endblock %}
+{% block body %}
+<header class="topbar">
+  <a class="brand" href="{{ url_for('dashboard') }}"><span class="logo sm">{{ icon('report', 18) }}</span>Report Builder</a>
+  <div class="who">
+    <span id="save-status" class="save-status" aria-live="polite">{{ icon('check', 16) }}<span id="save-text">All changes saved</span></span>
+    <button class="btn ghost" id="preview-btn" type="button">{{ icon('sheet', 16) }}Preview</button>
+    <div class="dl">
+      <button class="btn ghost" id="dl-btn" type="button">{{ icon('download', 16) }}Download As</button>
+      <div class="dl-menu" id="dl-menu" hidden>
+        <a href="{{ url_for('download_pdf') }}">PDF</a>
+        <a href="{{ url_for('download_excel') }}">EXCEL</a>
+      </div>
+    </div>
+    <a class="btn ghost" href="{{ url_for('dashboard') }}">{{ icon('home', 16) }}Dashboard</a>
+    <a class="btn ghost" href="{{ url_for('logout') }}">{{ icon('logout', 16) }}Sign out</a>
+  </div>
+</header>
+<div class="report-layout">
+  <aside class="side">
+    <label for="sheet-select">{{ icon('layers', 16) }} Report page</label>
+    <select id="sheet-select"></select>
+    <p class="count" id="page-count"></p>
+    <div class="side-nav">
+      <button class="btn ghost" id="prev" type="button">{{ icon('left', 16) }}Previous</button>
+      <button class="btn ghost" id="next" type="button">Next{{ icon('right', 16) }}</button>
+    </div>
+    <div id="band-box" class="band-box" hidden>
+      <label for="band-select">{{ icon('sheet', 16) }} Section</label>
+      <select id="band-select"></select>
+      <div class="side-nav">
+        <button class="btn ghost" id="band-prev" type="button">{{ icon('left', 16) }}Prev</button>
+        <button class="btn ghost" id="band-next" type="button">Next{{ icon('right', 16) }}</button>
+      </div>
+    </div>
+    <p class="hint">{{ icon('cloud', 16) }} Changes save automatically, also when you switch pages.</p>
+  </aside>
+  <section class="sheet-area">
+    <h2>{{ icon('sheet', 20) }}<span id="sheet-title"></span></h2>
+    <div class="sheet-scroll" id="sheet-scroll">
+      <p class="empty" id="loading">Loading…</p>
+      <div class="paper" id="paper"><table id="grid" class="grid"></table></div>
+    </div>
+    <div class="zoom-ctl" title="Zoom the page">
+      <button type="button" id="zoom-out" aria-label="Zoom out">−</button>
+      <input type="range" id="zoom-range" min="50" max="250" step="5" value="100" aria-label="Zoom">
+      <button type="button" id="zoom-in" aria-label="Zoom in">+</button>
+      <span id="zoom-text">100%</span>
+    </div>
+  </section>
+</div>
+<div id="preview" class="preview" hidden>
+  <div class="preview-bar">
+    <strong>Preview</strong><span id="preview-count" class="count"></span>
+    <span class="spacer"></span>
+    <a class="btn ghost" href="{{ url_for('download_pdf', inline=1) }}" target="_blank" rel="noopener">Open in new tab</a>
+    <a class="btn primary" id="pdf-btn" href="{{ url_for('download_pdf') }}">{{ icon('download', 16) }}Download PDF</a>
+    <button class="btn ghost" id="preview-close" type="button">Close</button>
+  </div>
+  <div class="preview-body" id="preview-body"></div>
+</div>
+<script src="{{ url_for('static', filename='js/photo_editor.js') }}"></script>
+<script src="{{ url_for('static', filename='js/report.js') }}"></script>
+{% endblock %}

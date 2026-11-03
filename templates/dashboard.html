@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}Dashboard · Report Builder{% endblock %}
+{% block body %}
+<header class="topbar">
+  <a class="brand" href="{{ url_for('dashboard') }}"><span class="logo sm">{{ icon('report', 18) }}</span>Report Builder</a>
+  <div class="who">
+    <span class="user-chip">{{ icon('user', 16) }}{{ name }}</span>
+    <a class="btn ghost" href="{{ url_for('logout') }}">{{ icon('logout', 16) }}Sign out</a>
+  </div>
+</header>
+<main class="dash">
+  <h1>Welcome, {{ name }}</h1>
+  <p class="lead">Pick up exactly where you left off.</p>
+  <a class="tile" href="{{ url_for('report') }}">
+    <span class="tile-icon">{{ icon('report', 30) }}</span>
+    <span class="tile-body">
+      <span class="tile-title">Report</span>
+      <span class="tile-tag">Make your report your way, at your own convenience.</span>
+    </span>
+    <span class="tile-go">Open</span>
+  </a>
+</main>
+{% endblock %}

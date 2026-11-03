@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}Sign in · Report Builder{% endblock %}
+{% block bodyclass %}auth{% endblock %}
+{% block body %}
+<main class="auth-wrap">
+  {% include "_auth_side.html" %}
+  <section class="auth-card">
+    <h2>Welcome back</h2>
+    {% with msgs = get_flashed_messages(with_categories=true) %}
+      {% for cat, m in msgs %}<div class="alert {{ cat }}" role="alert">{{ m }}</div>{% endfor %}
+    {% endwith %}
+    <form method="post" autocomplete="on">
+      <label for="email">Email ID</label>
+      <div class="field">{{ icon('mail') }}<input id="email" name="email" type="email" required value="{{ email or '' }}" autocomplete="email" placeholder="you@example.com"></div>
+      <label for="password">Password</label>
+      <div class="field">{{ icon('lock') }}<input id="password" name="password" type="password" required autocomplete="current-password" placeholder="Your password"></div>
+      <button class="btn primary" type="submit">Sign in</button>
+    </form>
+    <p class="switch">New here? <a href="{{ url_for('signup') }}">Create an account</a></p>
+  </section>
+</main>
+{% endblock %}
